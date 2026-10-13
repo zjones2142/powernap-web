@@ -164,6 +164,10 @@ html[data-sq="2"] .squiggle, html[data-sq="2"] .squiggle-border::before { filter
 
 /* ---------- SHOWS ---------- */
 .panel--shows {
+  /* The LAST panel must be at least the large viewport (address bar hidden),
+     otherwise the page bottom lands short of this panel's top on phones and
+     the snap target is unreachable. On iOS/Android, 100vh == large viewport. */
+  min-height: 100vh; min-height: 100lvh;
   grid-template-rows: 1fr auto;
   row-gap: 16px;
 }
