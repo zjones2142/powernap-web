@@ -42,7 +42,7 @@ html {
 }
 html.snap { scroll-snap-type: y mandatory; }
 body {
-  min-height: 100vh; min-height: 100dvh;
+  min-height: 100vh; min-height: 100svh;
   /* tiled night sky: faint yellow stars (the wizard's robe) over a dot grid */
   background-color: var(--bg);
   background-image:
@@ -101,6 +101,7 @@ html[data-sq="2"] .squiggle, html[data-sq="2"] .squiggle-border::before { filter
   min-height: 34px; padding: 0 14px;
   font: 400 17px/1 var(--font-hand);
   color: var(--text); text-decoration: none;
+  white-space: nowrap;
   background: var(--bevel-face);
   border: 2px outset var(--bevel-light);
   cursor: pointer;
@@ -113,7 +114,7 @@ html[data-sq="2"] .squiggle, html[data-sq="2"] .squiggle-border::before { filter
 
 /* ---------- full-viewport snap panels ---------- */
 .panel {
-  min-height: 100vh; min-height: 100dvh;
+  min-height: 100vh; min-height: 100svh;     /* svh: stable while the mobile URL bar shows/hides */
   scroll-snap-align: start; scroll-snap-stop: always;
   display: grid; place-items: center;
   padding: calc(var(--nav-h) + 24px) 16px 24px;
@@ -124,14 +125,15 @@ html[data-sq="2"] .squiggle, html[data-sq="2"] .squiggle-border::before { filter
 
 .logo-box {
   position: relative;
-  padding: clamp(12px, 3vw, 28px) clamp(20px, 5vw, 56px);
+  padding: clamp(10px, 3vw, 28px) clamp(14px, 5vw, 56px);
+  max-width: calc(100vw - 40px);
   background: var(--card);
   border: 4px solid var(--ink);
   box-shadow: 10px 10px 0 var(--bevel-dark), 0 0 0 1px var(--line);   /* crude solid "shading" */
   transform: rotate(-2deg);
 }
 .wordmark {
-  font: 400 clamp(3.5rem, 15vw, 10rem)/1 var(--font-hand);
+  font: 400 clamp(2.5rem, 14vw, 10rem)/1 var(--font-hand);
   letter-spacing: 0.01em;
   color: var(--ink);
   text-align: center;
@@ -153,6 +155,7 @@ html[data-sq="2"] .squiggle, html[data-sq="2"] .squiggle-border::before { filter
   position: absolute; left: 50%; bottom: 56px; translate: -50% 0;
   font: 400 18px/1 var(--font-hand);
   color: var(--star); text-decoration: none;
+  white-space: nowrap;
   padding: 10px 12px;                         /* 44px tall target */
   animation: blink 1.2s steps(1, end) infinite;
 }
@@ -167,7 +170,7 @@ html[data-sq="2"] .squiggle, html[data-sq="2"] .squiggle-border::before { filter
 
 .heading {
   display: inline-flex; align-items: center; gap: 10px;
-  font: 400 clamp(2.25rem, 7vw, 3.5rem)/1.1 var(--font-hand);
+  font: 400 clamp(1.9rem, 9vw, 3.5rem)/1.1 var(--font-hand);
   color: var(--card);
   text-align: center;
   text-decoration: underline;
@@ -177,8 +180,8 @@ html[data-sq="2"] .squiggle, html[data-sq="2"] .squiggle-border::before { filter
 }
 .heading__bolt { width: 0.55em; height: auto; transform: rotate(-10deg); }
 .heading--lg { font-size: clamp(3rem, 12vw, 7rem); }
-.shows__sub { display: flex; align-items: center; gap: 8px; font: 16px/1.4 var(--font-hand); color: var(--text-soft); text-align: center; }
-.new-badge { flex: none; }
+.shows__sub { font: 16px/1.4 var(--font-hand); color: var(--text-soft); text-align: center; text-wrap: pretty; max-width: 40ch; }
+.new-badge { display: inline-block; vertical-align: -3px; margin-right: 6px; }
 
 .table-wrap { width: 100%; margin: 4px 0; }
 .shows-table {
@@ -229,7 +232,7 @@ html[data-sq="2"] .squiggle, html[data-sq="2"] .squiggle-border::before { filter
 
 /* ---------- GAMES ---------- */
 .stack { display: grid; justify-items: center; gap: 20px; text-align: center; }
-.lede { font: 19px/1.5 var(--font-hand); color: var(--text); max-width: 36ch; }
+.lede { font: 19px/1.5 var(--font-hand); color: var(--text); max-width: 36ch; text-wrap: balance; }
 .construction {
   width: min(90vw, 420px); height: 22px;
   background: repeating-linear-gradient(135deg, var(--star) 0 16px, var(--ink) 16px 32px);
@@ -239,10 +242,31 @@ html[data-sq="2"] .squiggle, html[data-sq="2"] .squiggle-border::before { filter
 
 /* ---------- responsive ---------- */
 @media (max-width: 560px) {
+  .nav { gap: 3px; }
   .nav__btn { padding: 0 10px; font-size: 15px; }
+  .panel { padding: calc(var(--nav-h) + 16px) 12px 16px; }
   .moon { right: 12px; }
-  .shows-table th, .shows-table td { padding: 6px; font-size: 15px; }
   .logo-box { box-shadow: 6px 6px 0 var(--bevel-dark), 0 0 0 1px var(--line); }
+  .scroll-hint { bottom: 24px; }
+
+  /* shows: each row becomes a little stacked card */
+  .panel--shows { row-gap: 12px; }
+  .shows { gap: 8px; }
+  .shows__sub { font-size: 15px; }
+  .squiggle-border { padding: 6px; }
+  .shows-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .shows-table, .shows-table tbody, .shows-table tr, .shows-table td { display: block; }
+  .shows-table tr { padding: 8px 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.13); }
+  .shows-table tbody tr:last-child { border-bottom: 0; }
+  .shows-table td { padding: 0; border: 0 !important; font-size: 15px; line-height: 1.35; }
+  .shows-table td.when { white-space: normal; color: var(--text-soft); }
+  .shows-table td.when b { display: inline; }
+  .shows-table td.when b::after { content: " \00b7 "; color: var(--text-soft); }
+  .shows-table td.what b { font-size: 18px; }
+  .row--loading td, .row--empty td { padding: 10px; }
+
+  .site-footer { font-size: 14px; line-height: 1.4; }
+  .badges { margin: 6px 0; }
 }
 
 /* ---------- motion preferences ---------- */
