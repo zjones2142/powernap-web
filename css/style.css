@@ -38,9 +38,10 @@ html {
   color-scheme: dark;
   font: 17px/1.5 var(--font-hand);
   -webkit-text-size-adjust: 100%;
-  scroll-behavior: smooth;
+  /* no scroll-behavior: smooth here — it jitters with scroll-snap on iOS;
+     js/snap.js animates anchor scrolling instead */
 }
-html.snap { scroll-snap-type: y mandatory; }
+html.snap { scroll-snap-type: y mandatory; overscroll-behavior-y: none; }
 body {
   min-height: 100vh; min-height: 100svh;
   /* tiled night sky: faint yellow stars (the wizard's robe) over a dot grid */
@@ -271,6 +272,5 @@ html[data-sq="2"] .squiggle, html[data-sq="2"] .squiggle-border::before { filter
 
 /* ---------- motion preferences ---------- */
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
   .scroll-hint, .dots::after { animation: none; }
 }
