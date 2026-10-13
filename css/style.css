@@ -38,8 +38,8 @@ html {
   color-scheme: dark;
   font: 17px/1.5 var(--font-hand);
   -webkit-text-size-adjust: 100%;
-  /* no scroll-behavior: smooth here — it jitters with scroll-snap on iOS;
-     js/snap.js animates anchor scrolling instead */
+  /* no scroll-behavior: smooth — it jitters with scroll-snap on iOS.
+     Nav links are plain anchors: instant jump straight onto a snap point. */
 }
 html.snap { scroll-snap-type: y mandatory; overscroll-behavior-y: none; }
 body {
