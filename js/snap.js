@@ -10,22 +10,29 @@
   if (panels.length < 2) return;
 
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const root = document.documentElement;
   let raf = 0, settleTimer = 0, touching = false, animating = false;
 
   const easeOut = (t) => 1 - Math.pow(1 - t, 3);
 
+  // CSS snap is switched off while we animate: otherwise iOS Safari treats
+  // every frame's scrollTo as a finished scroll and snaps back to where you
+  // were, which made the nav buttons look dead.
+  function beginGlide() { animating = true; root.style.scrollSnapType = "none"; }
+  function endGlide() { cancelAnimationFrame(raf); animating = false; root.style.scrollSnapType = ""; }
+
   function glideTo(targetY, duration = 420) {
-    cancelAnimationFrame(raf);
+    endGlide();
     const startY = window.scrollY, dist = targetY - startY;
     if (Math.abs(dist) < 1) return;
     if (reduce.matches) { window.scrollTo(0, targetY); return; }
-    animating = true;
+    beginGlide();
     const t0 = performance.now();
     const step = (now) => {
       const p = Math.min(1, (now - t0) / duration);
       window.scrollTo(0, startY + dist * easeOut(p));
       if (p < 1) raf = requestAnimationFrame(step);
-      else animating = false;
+      else endGlide();
     };
     raf = requestAnimationFrame(step);
   }
@@ -62,7 +69,7 @@
     settleTimer = setTimeout(onSettled, 160);
   }, { passive: true });
 
-  window.addEventListener("touchstart", () => { touching = true; cancelAnimationFrame(raf); animating = false; }, { passive: true });
+  window.addEventListener("touchstart", () => { touching = true; endGlide(); }, { passive: true });
   window.addEventListener("touchend", () => { touching = false; clearTimeout(settleTimer); settleTimer = setTimeout(onSettled, 220); }, { passive: true });
   window.addEventListener("touchcancel", () => { touching = false; }, { passive: true });
 
