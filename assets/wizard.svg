@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 230" width="150" height="230" stroke="#120a26" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+  <!-- napping wizard placeholder: swap for real mascot art -->
+  <!-- robe -->
+  <path d="M42 150 L30 222 Q75 232 120 222 L108 150 Z" fill="#5a3d8a"/>
+  <path d="M60 170 l3 7 7 1 -5 5 1 7 -6 -4 -6 4 1 -7 -5 -5 7 -1z" fill="#ffd21f" stroke-width="2"/>
+  <path d="M92 190 l3 7 7 1 -5 5 1 7 -6 -4 -6 4 1 -7 -5 -5 7 -1z" fill="#ffd21f" stroke-width="2"/>
+  <!-- sleeves / hands folded -->
+  <path d="M48 176 Q75 196 102 176" fill="none"/>
+  <!-- beard -->
+  <path d="M50 134 Q48 168 75 176 Q102 168 100 134 Z" fill="#f4f0ff"/>
+  <!-- face -->
+  <circle cx="75" cy="124" r="25" fill="#f3d9c4"/>
+  <!-- closed eyes -->
+  <path d="M60 122 q7 6 14 0" fill="none"/>
+  <path d="M78 122 q7 6 14 0" fill="none"/>
+  <!-- nose + snoring mouth -->
+  <path d="M74 126 q4 6 -2 9" fill="none" stroke-width="3"/>
+  <ellipse cx="76" cy="142" rx="4" ry="3" fill="#120a26" stroke="none"/>
+  <!-- hat -->
+  <path d="M38 104 L76 18 L112 104 Z" fill="#3b5bdb"/>
+  <path d="M76 18 q18 -10 10 8" fill="#3b5bdb"/>
+  <path d="M72 52 l3 7 7 1 -5 5 1 7 -6 -4 -6 4 1 -7 -5 -5 7 -1z" fill="#ffd21f" stroke-width="2"/>
+  <path d="M58 82 l2.5 6 6 1 -4.5 4 1 6 -5 -3.5 -5 3.5 1 -6 -4.5 -4 6 -1z" fill="#ffd21f" stroke-width="2"/>
+  <path d="M90 84 l2.5 6 6 1 -4.5 4 1 6 -5 -3.5 -5 3.5 1 -6 -4.5 -4 6 -1z" fill="#ffd21f" stroke-width="2"/>
+  <ellipse cx="75" cy="104" rx="46" ry="10" fill="#3b5bdb"/>
+</svg>

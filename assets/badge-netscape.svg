@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="88" height="31" viewBox="0 0 88 31" shape-rendering="crispEdges">
+  <rect width="88" height="31" fill="#2b3a67"/>
+  <path d="M0 0h87v1H0z M0 0h1v30H0z" fill="#ffffff" opacity=".8"/>
+  <path d="M0 30h88v1H0z M87 0h1v31h-1z" fill="#000000" opacity=".6"/>
+  <text x="44" y="13" text-anchor="middle" font-family="Verdana, Arial, sans-serif" font-size="8" font-weight="bold" fill="#ffffff">BEST VIEWED IN</text>
+  <text x="44" y="24" text-anchor="middle" font-family="Verdana, Arial, sans-serif" font-size="8" fill="#ffffff">NETSCAPE 4.0</text>
+</svg>

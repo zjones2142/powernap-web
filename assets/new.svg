@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="16" viewBox="0 0 40 16" shape-rendering="crispEdges">
+  <rect width="40" height="16" fill="#e4302a"/>
+  <rect x="1" y="1" width="38" height="14" fill="none" stroke="#ffe34d" stroke-width="1"/>
+  <text x="20" y="12" text-anchor="middle" font-family="Verdana, Arial, sans-serif" font-size="9" font-weight="bold" fill="#ffe34d">NEW!</text>
+</svg>

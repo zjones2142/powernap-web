@@ -1,0 +1,252 @@
+/* ========================================================================
+   PowerNap — "Home Movies" x late-90s web, night edition.
+   Deep purple sky tiled with yellow stars, white logo card,
+   moon for "sleepy". Full-viewport snap sections.
+   ======================================================================== */
+
+:root {
+  --bg:          #1b1033;   /* night purple */
+  --bg-dot:      #2c1d52;
+  --star:        #ffd21f;   /* robe stars / lightning */
+  --paper:       #2f2055;   /* table / box fill */
+  --paper-alt:   #392868;
+  --card:        #f7f3ff;   /* the white logo card */
+  --ink:         #120a26;   /* outlines on light things */
+  --text:        #f1eaff;   /* 14:1 on --bg */
+  --text-soft:   #c4b6e6;   /* 8:1 on --bg */
+  --line:        #8a74c4;
+  --purple:      #120a26;   /* table header */
+  --robe-blue:   #3b5bdb;
+  --bevel-face:  #3d2b6b;
+  --bevel-light: #7d66b8;
+  --bevel-dark:  #0e0820;
+  --link:        #9ec1ff;   /* 90s dark-page links */
+  --link-visited:#d2b4ff;
+  --rec:         #ff4a3d;
+
+  --font-hand:   "Gochi Hand", "Comic Sans MS", cursive;   /* the one font */
+
+  --nav-h: 2.75rem;
+}
+
+/* ---------- base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; }
+html {
+  color: var(--text);
+  background: var(--bg);
+  color-scheme: dark;
+  font: 17px/1.5 var(--font-hand);
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+html.snap { scroll-snap-type: y mandatory; }
+body {
+  min-height: 100vh; min-height: 100dvh;
+  /* tiled night sky: faint yellow stars (the wizard's robe) over a dot grid */
+  background-color: var(--bg);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cg fill='%23ffd21f' fill-opacity='.22'%3E%3Cpath d='M20 10l1.6 4.4L26 16l-4.4 1.6L20 22l-1.6-4.4L14 16l4.4-1.6z'/%3E%3Cpath d='M70 50l1.2 3.3 3.3 1.2-3.3 1.2L70 59l-1.2-3.3-3.3-1.2 3.3-1.2z'/%3E%3Cpath d='M40 78l.9 2.4 2.4.9-2.4.9-.9 2.4-.9-2.4-2.4-.9 2.4-.9z'/%3E%3C/g%3E%3C/svg%3E"),
+    radial-gradient(var(--bg-dot) 1px, transparent 1.6px);
+  background-size: 96px 96px, 12px 12px;
+  overflow-x: clip;
+}
+img, svg { display: block; max-width: 100%; }
+.defs { position: absolute; width: 0; height: 0; }
+h1, h2, h3, p { margin: 0; }
+[hidden] { display: none !important; }
+a { color: var(--link); text-decoration: underline; }
+a:visited { color: var(--link-visited); }
+a:hover { color: var(--star); }
+
+:focus-visible { outline: 2px dotted var(--star); outline-offset: 2px; }
+
+.skip-link {
+  position: absolute; left: 8px; top: -100px; z-index: 100;
+  padding: 4px 10px; background: var(--star); color: var(--ink);
+}
+.skip-link:focus { top: 8px; }
+
+/* ---------- squigglevision ----------
+   js/retro.js cycles data-sq on <html> between 0/1/2 a few times a second
+   (CSS can't animate between url() filters). Reduced-motion users get a
+   single static wobble. */
+.squiggle, .squiggle-border::before { filter: url(#sq0); }
+html[data-sq="1"] .squiggle, html[data-sq="1"] .squiggle-border::before { filter: url(#sq1); }
+html[data-sq="2"] .squiggle, html[data-sq="2"] .squiggle-border::before { filter: url(#sq2); }
+
+/* .squiggle-border: the element's fill AND frame are one wobbly layer behind
+   transparent content, so the text stays crisp while the whole box squiggles.
+   Keep a little padding so straight inner edges never poke past the frame. */
+.squiggle-border { position: relative; z-index: 0; padding: 10px; }
+.squiggle-border::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: var(--paper);
+  border: 4px solid var(--line);
+  box-shadow: 8px 8px 0 var(--bevel-dark);
+  pointer-events: none;
+}
+
+/* ---------- nav: a toolbar with beveled buttons ---------- */
+.nav {
+  position: fixed; inset: 0 0 auto 0; z-index: 50;
+  display: flex; justify-content: center; flex-wrap: wrap; gap: 4px;
+  padding: 4px 8px;
+  background: var(--bevel-face);
+  border-bottom: 2px solid var(--bevel-dark);
+  box-shadow: inset 0 1px 0 var(--bevel-light);
+}
+.nav__btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 34px; padding: 0 14px;
+  font: 400 17px/1 var(--font-hand);
+  color: var(--text); text-decoration: none;
+  background: var(--bevel-face);
+  border: 2px outset var(--bevel-light);
+  cursor: pointer;
+}
+.nav__btn:hover { background: #4b3783; color: #fff; }
+.nav__btn:visited { color: var(--text); }
+.nav__btn:active, .nav__btn.is-active {
+  border-style: inset; background: var(--bevel-dark); color: var(--star);
+}
+
+/* ---------- full-viewport snap panels ---------- */
+.panel {
+  min-height: 100vh; min-height: 100dvh;
+  scroll-snap-align: start; scroll-snap-stop: always;
+  display: grid; place-items: center;
+  padding: calc(var(--nav-h) + 24px) 16px 24px;
+}
+
+/* ---------- HOME ---------- */
+.panel--hero { position: relative; }
+
+.logo-box {
+  position: relative;
+  padding: clamp(12px, 3vw, 28px) clamp(20px, 5vw, 56px);
+  background: var(--card);
+  border: 4px solid var(--ink);
+  box-shadow: 10px 10px 0 var(--bevel-dark), 0 0 0 1px var(--line);   /* crude solid "shading" */
+  transform: rotate(-2deg);
+}
+.wordmark {
+  font: 400 clamp(3.5rem, 15vw, 10rem)/1 var(--font-hand);
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  text-align: center;
+  white-space: nowrap;
+}
+.wordmark__power { color: var(--ink); }
+.wordmark__nap   { color: var(--robe-blue); }
+.logo { width: min(80vw, 640px); height: auto; }
+
+.moon {
+  position: absolute; top: calc(var(--nav-h) + 26px); right: 24px;
+  width: clamp(48px, 7vw, 80px); height: auto;
+  transform: rotate(-12deg);
+}
+
+@keyframes blink { 50% { opacity: 0; } }
+
+.scroll-hint {
+  position: absolute; left: 50%; bottom: 56px; translate: -50% 0;
+  font: 400 18px/1 var(--font-hand);
+  color: var(--star); text-decoration: none;
+  padding: 10px 12px;                         /* 44px tall target */
+  animation: blink 1.2s steps(1, end) infinite;
+}
+.scroll-hint:hover { color: #fff; animation: none; }
+
+/* ---------- SHOWS ---------- */
+.panel--shows {
+  grid-template-rows: 1fr auto;
+  row-gap: 16px;
+}
+.shows { width: 100%; max-width: 46rem; display: grid; gap: 12px; justify-items: center; }
+
+.heading {
+  display: inline-flex; align-items: center; gap: 10px;
+  font: 400 clamp(2.25rem, 7vw, 3.5rem)/1.1 var(--font-hand);
+  color: var(--card);
+  text-align: center;
+  text-decoration: underline;
+  text-decoration-color: var(--star);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 6px;
+}
+.heading__bolt { width: 0.55em; height: auto; transform: rotate(-10deg); }
+.heading--lg { font-size: clamp(3rem, 12vw, 7rem); }
+.shows__sub { display: flex; align-items: center; gap: 8px; font: 16px/1.4 var(--font-hand); color: var(--text-soft); text-align: center; }
+.new-badge { flex: none; }
+
+.table-wrap { width: 100%; margin: 4px 0; }
+.shows-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: transparent;          /* the squiggle layer behind supplies the fill */
+  color: var(--text);
+  font: 16px/1.35 var(--font-hand);
+}
+.shows-table th, .shows-table td {
+  padding: 8px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.13);   /* faint inner lines only */
+  text-align: left; vertical-align: top;
+}
+.shows-table tr > :first-child { border-left: 0; }
+.shows-table tr > :last-child  { border-right: 0; }
+.shows-table thead th { border-top: 0; }
+.shows-table tbody tr:last-child td { border-bottom: 0; }
+.shows-table th {
+  background: rgba(0, 0, 0, 0.42); color: var(--star);
+  font: 400 17px/1.2 var(--font-hand);
+}
+.shows-table tbody tr:nth-child(even) td { background: rgba(0, 0, 0, 0.16); }
+.shows-table tbody tr:hover td { background: rgba(255, 255, 255, 0.09); }
+.shows-table td.when { white-space: nowrap; }
+.shows-table b { font-weight: 400; color: #fff; }   /* Gochi Hand has no bold; use white for emphasis */
+.shows-table td.when b { display: block; }
+.shows-table td.what b { font-size: 18px; }
+.row--loading td, .row--empty td { text-align: center; color: var(--text-soft); padding: 18px; }
+
+/* "Loading..." animated dots */
+.dots::after { content: "..."; animation: dots 1.2s steps(4, end) infinite; display: inline-block; width: 1.5em; text-align: left; }
+@keyframes dots { 0% { content: ""; } 25% { content: "."; } 50% { content: ".."; } 75% { content: "..."; } }
+
+.shows__footer { font: 16px/1.4 var(--font-hand); text-align: center; }
+
+/* site footer, bottom of the shows panel */
+.site-footer { width: 100%; max-width: 46rem; text-align: center; font: 15px/1.6 var(--font-hand); color: var(--text-soft); }
+.rule { border: 0; border-top: 1px solid var(--bevel-dark); border-bottom: 1px solid var(--bevel-light); margin: 0 0 12px; }
+.counter { color: var(--text); }
+.counter__digits {
+  display: inline-block; padding: 1px 6px; margin-left: 4px;
+  font: 20px/1 var(--font-hand); letter-spacing: 0.15em;
+  color: #39ff6a; background: #050308; border: 2px inset var(--bevel-light);
+}
+.badges { display: flex; justify-content: center; gap: 6px; margin: 10px 0; }
+.fine { color: var(--text-soft); }
+
+/* ---------- GAMES ---------- */
+.stack { display: grid; justify-items: center; gap: 20px; text-align: center; }
+.lede { font: 19px/1.5 var(--font-hand); color: var(--text); max-width: 36ch; }
+.construction {
+  width: min(90vw, 420px); height: 22px;
+  background: repeating-linear-gradient(135deg, var(--star) 0 16px, var(--ink) 16px 32px);
+  border: 2px solid var(--ink);
+  box-shadow: 0 0 0 1px var(--line);
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 560px) {
+  .nav__btn { padding: 0 10px; font-size: 15px; }
+  .moon { right: 12px; }
+  .shows-table th, .shows-table td { padding: 6px; font-size: 15px; }
+  .logo-box { box-shadow: 6px 6px 0 var(--bevel-dark), 0 0 0 1px var(--line); }
+}
+
+/* ---------- motion preferences ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .scroll-hint, .dots::after { animation: none; }
+}

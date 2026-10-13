@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en" class="snap">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PowerNap</title>
+  <meta name="description" content="PowerNap — the official web site. Upcoming shows and more.">
+  <meta name="theme-color" content="#1b1033">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#shows">Skip to upcoming shows</a>
+
+  <!-- Squigglevision: three slightly different wobble filters, cycled by CSS -->
+  <svg class="defs" width="0" height="0" aria-hidden="true" focusable="false">
+    <filter id="sq0" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="2"/><feDisplacementMap in="SourceGraphic" scale="7"/></filter>
+    <filter id="sq1" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="7"/></filter>
+    <filter id="sq2" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="13"/><feDisplacementMap in="SourceGraphic" scale="7"/></filter>
+  </svg>
+
+  <nav class="nav" aria-label="Primary">
+    <a href="#home" class="nav__btn" data-section="home">Home</a>
+    <a href="#shows" class="nav__btn" data-section="shows">Upcoming Shows</a>
+    <a href="games.html" class="nav__btn">Games</a>
+  </nav>
+
+  <main>
+    <!-- HOME: full-viewport, centered logo, camcorder overlay -->
+    <section id="home" class="panel panel--hero" aria-label="Home">
+      <img class="moon squiggle" src="assets/moon.svg" alt="" width="80" height="80" aria-hidden="true">
+
+      <!--
+        LOGO PLACEHOLDER
+        Replace the <h1> with an <img> when the logo is ready, e.g.
+        <img class="logo" src="assets/logo.png" alt="PowerNap" width="640" height="240">
+        The .squiggle class on the wrapper gives it the wobbly-line effect.
+      -->
+      <div class="logo-box squiggle">
+        <h1 class="wordmark"><span class="wordmark__power">Power</span><span class="wordmark__nap">Nap</span></h1>
+      </div>
+
+      <a class="scroll-hint" href="#shows">&#9660; scroll down for shows &#9660;</a>
+    </section>
+
+    <!-- SHOWS: full-viewport, Google Calendar data rendered into our own table -->
+    <section id="shows" class="panel panel--shows" aria-labelledby="shows-title">
+      <div class="shows">
+        <h2 id="shows-title" class="heading squiggle"><img class="heading__bolt" src="assets/bolt.svg" alt="" width="24" height="40" aria-hidden="true">Upcoming Shows</h2>
+        <p class="shows__sub" id="shows-sub"><img class="new-badge" src="assets/new.svg" alt="New!" width="40" height="16"> Pulled straight from our calendar.</p>
+
+        <div class="table-wrap squiggle-border">
+          <table class="shows-table">
+            <thead>
+              <tr><th scope="col">When</th><th scope="col">Show</th><th scope="col">Where</th></tr>
+            </thead>
+            <!-- Populated by js/calendar.js -->
+            <tbody id="shows-list" aria-live="polite" aria-busy="true">
+              <tr class="row--loading"><td colspan="3">Loading shows<span class="dots" aria-hidden="true"></span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="shows__footer">
+          <a id="shows-subscribe" href="#" hidden target="_blank" rel="noopener">&#187; Add our calendar to your Google Calendar</a>
+        </p>
+      </div>
+
+      <footer class="site-footer">
+        <hr class="rule">
+        <p class="counter">You are visitor number <span class="counter__digits" id="hit-counter">000000</span></p>
+        <p class="badges" aria-label="Site badges">
+          <img src="assets/badge-netscape.svg" alt="Best viewed in Netscape Navigator 4.0" width="88" height="31">
+          <img src="assets/badge-800x600.svg" alt="Best viewed at 800 by 600" width="88" height="31">
+          <img src="assets/badge-notepad.svg" alt="Made with Notepad" width="88" height="31">
+        </p>
+        <p class="fine">&copy; <span id="year">2026</span> PowerNap &middot; Last updated <span id="updated">Oct 13, 2026</span></p>
+      </footer>
+    </section>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/calendar.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/retro.js"></script>
+</body>
+</html>
